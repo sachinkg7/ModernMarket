@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<title>
+	ProductsPage
+</title>
+<style>
+	{% comment %} @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap'); {% endcomment %}
+
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	} 
+	
+	 body{
+		font-size: 1.7rem;
+		font-family: 'Merriweather Sans', sans-serif;
+		background: #17101a;
+		color: #ececec;
+		{% comment %} padding: 4rem; {% endcomment %}
+	} 
+	
+	h2{
+		text-align: center;
+		margin-bottom: 5rem;
+		font-size: 4rem;
+	}
+	
+	.all-products{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+	
+	.product{
+		overflow: hidden;
+		background: #ffffff;
+		color: #21201e;
+		text-align: center;
+		width: 300px;
+		height: 470px;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border-radius: 1.2rem;
+		margin: 1rem;
+	}
+	
+	.product .product-title, .product .product-price{
+		font-size: 16px;
+	}
+	.product-rating{
+		font-size:13px;
+	}
+	
+	.product:hover img{
+		scale:  1.1;
+	}
+	
+	.product:hover {
+		box-shadow: 0px 5px 10px 0px rgba(0,255,255,0.7);  
+	}
+	
+	.product img {
+		height: 210px;
+		margin: 1rem;
+		transition: all 0.3s;
+	}
+	
+	.product a:link, .product a:visited{
+		color: #ececec;
+		display: inline-block;
+		text-decoration: none;
+		background-color: #17101a;
+		padding: 1.2rem 3rem;
+		border-radius: 1rem;
+		margin-top: 1rem;
+		font-size: 14px;
+		transition: all 0.2s;
+	}
+	
+	.product a:hover{
+		transform: scale(1.1);
+	}
+
+	section{
+		padding-top:20px; !important
+	}
+
+  
+		.search {
+		width: 100%;
+		position: relative;
+		display: flex;
+		}
+
+		.searchTerm {
+		width: 80%;
+		border: 3px solid #00B4CC;
+		border-right: none;
+		padding: 15px;
+		height: 30px;
+		border-radius: 7px 0 0 7px;
+		outline: none;
+		color: #9DBFAF;
+		font-size:15px;
+		}
+		.searchTerm2 {
+			width: 20%;
+			border: 3px solid #00B4CC;
+			border-right: none;
+			padding: 15px;
+			height: 30px;
+			border-radius: 0px 0px 0px 0px;
+			outline: none;
+			color: #9DBFAF;
+			font-size:15px;
+			}
+		.searchTerm:focus{
+		color: black;
+		}
+		.searchTerm2:focus{
+			color: black;
+			}
+		.searchButton {
+		width: 80px;
+		height: 35px;
+		border: 1px solid #00B4CC;
+		background: #17101a;
+		text-align: center;
+		color: #fff;
+		border-radius: 0 5px 5px 0;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	.searchButton:hover{
+		transform: scale(1.03);
+	}
+
+		/*Resize the wrap to see the search bar change!*/
+		.wrap{
+		width: 40%;
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -0%);
+		}
+			
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<br>
+<br>
+
+<div class="wrap">
+	<form method='POST' action="{% url 'productpage' %}">
+	{% csrf_token %}
+	<div class="search">
+	   <input type="text" class="searchTerm" name="searched_item" placeholder="What are you looking for?">
+	   <input type="text" class="searchTerm2" name="min_price" placeholder="0" >         
+	   <input type="text" class="searchTerm2" name="max_price" placeholder="100000"> 
+
+		<button type="submit" class="searchButton">
+		  Search
+	   </button>
+	</div>
+	</form>
+		
+ </div>
+    {% if yousearched %}
+ 		<div class="d-flex justify-content-center">
+			<span style="font-size:18px ">searched for <strong style="background-color:green">{{yousearched}}</strong> </span>
+
+		</div>
+
+	{% endif %}
+	
+    <section class="products">
+        <div class="all-products">
+			
+				{% for pd in products %}
+				<div class="product">
+					<img src="/{{pd.p_image}}">
+					<div class="product-info">
+						<h4 class="product-title">
+							{{pd.p_name}}
+						</h4>
+						<p class="product-rating"><span class=" text-light p-1 rating-color" style="border-radius: 5px">{{pd.p_rating}}</span>&nbsp({{ pd.p_buycount }})
+						</p>
+						<p class="product-price">
+							₹{{pd.p_price}}
+						</p>
+						<a class="product-btn" href="{{pd.id}}/">
+							Buy Now
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+				
+
+        </div>
+    </section>
+	
+
+	<footer id="footer">
+			<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong><span>ModernMarket</span></strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			Designed by Sachin Gupta
+		  </div>
+		</div>
+	  </footer>
+
+
+	<script>
+        let rating = document.getElementsByClassName('rating-color');
+        console.log(rating[0].innerHTML)
+        for (let i = 0; i < rating.length; i++) {
+          if (parseInt(rating[i].innerHTML) == 0 ){
+            rating[i].style.backgroundColor = "grey";
+            continue;
+          }
+          if (parseInt(rating[i].innerHTML) >=4 )
+            rating[i].style.backgroundColor = "green";
+          else if(parseInt(rating[i].innerHTML) >=3)
+            rating[i].style.backgroundColor = "orange";
+          else rating[i].style.backgroundColor = "red";
+        }
+      </script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<style>
+    section{
+        padding-top: 10px !important
+    } 
+    .btn:hover{
+		transform: scale(1.05);
+	}
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+
+    <section class="h-100" style="background-color: #17101a">
+        {% if cart_items %}
+        <div class="container h-100 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">                 
+                    <div class=" d-flex justify-content-between m-4">
+                        <h3 class="fw-normal mb-0 text-white"> <strong>Cart</strong></h3>
+                        <a href="{% url 'checkout' %}" type="button" class="btn btn-warning btn-block btn-lg">Proceed to checkout</a>
+                    </div>
+                    {% for c in cart_items %}
+                    <div class="card rounded-3 mb-4">
+                        <div class="card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    <a href="{% url 'productpage' %}{{c.product.id}}/" >
+                                        <img
+                                        src="/{{ c.product.p_image}}"
+                                        class="img-fluid rounded-3"  alt="Cotton T-shirt">
+                                    </a>
+                                </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <p class="lead fw-normal mb-2">{{c.product.p_name}}</p>
+                                        <p><span class="text-muted">Brand:</span>{{ c.product.p_brand}} <span class="text-muted"></p>
+                                            <p><span class="text-muted">Quantity:</span>{{ c.quantity}} <span class="text-muted"></p>
+                                            </div>
+                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                <h5 class="mb-0 " style="font-family:sans-serif"> ₹{{ c.product.p_price }}</h5>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="item_id" visibility="false" value="{{c.id}}">
+                                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {% endfor %}                   
+                            </div>
+                        </div>
+                    </div>
+                
+        {% else %}
+           <div style="display: flex;
+           justify-content: center; ">
+                <h1 style="color:white">Oops! Cart is empty (:</h1>
+           </div>
+        {% endif %}
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+      <div class="copyright">
+          &copy; Copyright <strong><span>ModernMarket</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Designed by Sachin Gupta
+        </div>
+    </div>
+</footer>
+{% endblock %}

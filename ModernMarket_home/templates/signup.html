@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+ {% block head %}
+{% comment %} <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge"> {% endcomment %}
+<title>Sign Up</title>
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="/static/assets_signup/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+{% comment %} <link rel="stylesheet" href="/static/assets_signup/css/style.css">  {% endcomment %}
+<style>
+    body {
+
+        background-image: url("/static/assets_signup/images/stadium4.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        -ms-background-size: cover;
+        background-position: center center;
+        padding: 0px 0; 
+        text-align: center !important
+    }
+    
+    .signup-content 
+    {
+        background: #fff;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -o-border-radius: 10px;
+        -ms-border-radius: 10px;
+        padding: 50px 85px; 
+    }
+        
+    .form-group 
+    {
+        overflow: hidden;
+        margin-bottom: 10px; 
+    }
+        
+    .form-input 
+    {
+        width: 100%;
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -o-border-radius: 5px;
+        -ms-border-radius: 5px;
+        padding: 17px 20px;
+        box-sizing: border-box;
+        font-size: 12px;
+        font-weight: 500;
+        color: #222; }
+        .form-input::-webkit-input-placeholder {
+            color: #999; }
+        .form-input::-moz-placeholder {
+            color: #999; }
+        .form-input:-ms-input-placeholder {
+            color: #999; }
+        .form-input:-moz-placeholder {
+            color: #999; }
+        .form-input::-webkit-input-placeholder {
+            font-weight: 500; }
+        .form-input::-moz-placeholder {
+            font-weight: 500; }
+        .form-input:-ms-input-placeholder {
+            font-weight: 500; }
+        .form-input:-moz-placeholder {
+            font-weight: 500; }
+        .form-input:focus {
+            border: 1px solid transparent;
+            -webkit-border-image-source: -webkit-linear-gradient(to right, #9face6, #74ebd5);
+            -moz-border-image-source: -moz-linear-gradient(to right, #9face6, #74ebd5);
+            -o-border-image-source: -o-linear-gradient(to right, #9face6, #74ebd5);
+            border-image-source: linear-gradient(to right, #9face6, #74ebd5);
+            -webkit-border-image-slice: 1;
+            border-image-slice: 1;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -o-border-radius: 5px;
+            -ms-border-radius: 5px;
+            background-origin: border-box;
+            background-clip: content-box, border-box; }
+            .form-input:focus::-webkit-input-placeholder {
+            color: #222; }
+            .form-input:focus::-moz-placeholder {
+            color: #222; }
+            .form-input:focus:-ms-input-placeholder {
+            color: #222; }
+            .form-input:focus:-moz-placeholder {
+            color: #222; 
+    }
+        
+    .form-submit {
+        width: 100%;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -o-border-radius: 5px;
+        -ms-border-radius: 5px;
+        padding: 17px 20px;
+        box-sizing: border-box;
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+        border: none;
+        background-image: -moz-linear-gradient(to left, #74ebd5, #9face6);
+        background-image: -ms-linear-gradient(to left, #74ebd5, #9face6);
+        background-image: -o-linear-gradient(to left, #74ebd5, #9face6);
+        background-image: -webkit-linear-gradient(to left, #74ebd5, #9face6);
+        background-image: linear-gradient(to left, #74ebd5, #9face6); 
+    }
+    .field-icon {
+        float: right;
+        margin-right: 17px;
+        margin-top: -32px;
+        position: relative;
+        z-index: 2;
+        color: #555; }
+</style>
+{% endblock %} 
+
+
+{% block body %}
+
+    {% for message in messages %}
+        <div class="col-6 offset-3 alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+    <section class="d-flex">
+        <!-- <img src="images/signup-bg.jpg" alt=""> -->
+        <div class="container col-lg-5 col-md-6 col-sm-6">
+            <div class="signup-content">
+                <form method="POST" id="signup-form" class="signup-form">
+                    {% csrf_token %}
+                    <h2 class="form-title text-align: center !important">Sign Up</h2>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="fname" id="fname" placeholder="Your First Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="lname" id="lname" placeholder="Your Last Name" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="username" id="username" placeholder="Your username" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="password" id="password" placeholder="Password" required/>
+                        <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Confirm Password" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
+                    </div>
+                </form>
+                <p class="loginhere">
+                    Already have an account ? <a href="{% url 'login' %}" class="loginhere-link">Login here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+<!-- JS -->
+<script src="/static/assets_signup/vendor/jquery/jquery.min.js"></script>
+<script src="/static/assets_signup/js/main.js"></script>  
+    
+{% endblock %}

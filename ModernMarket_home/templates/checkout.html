@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<style>
+    section{
+        padding-top: 80px !important
+    }
+    .btn {
+      background-color:#17101a;
+      color: #fff;
+      border:none;
+  }
+    .btn:hover{
+      background-color:#17101a;
+      transform: scale(1.05);
+    }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<section class="h-100" style="background-color: #17101a">
+    <div class="container wow fadeIn">
+
+      <!-- Heading -->
+      <h2 style="color:white">Checkout form</h2>
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form class="card-body" method="POST" action="{% url 'placeorder' %}">
+                {% csrf_token %}
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-2">
+
+                  <!--firstName-->
+                  <div class="md-form ">
+                    <input type="text" name="fname" id="firstName" class="form-control" placeholder="John" required >
+                    <label for="firstName" class="">First name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-2">
+
+                  <!--lastName-->
+                  <div class="md-form">
+                    <input type="text" name="lname" id="lastName" class="form-control" placeholder="Doe">
+                    <label for="lastName" class="">Last name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+             
+              <!--email-->
+              <div class="md-form mb-4">
+                <input type="text" name="email" id="email" class="form-control" placeholder="youremail@example.com">
+                <label for="email" class="">Email </label>
+              </div>
+
+              <!--address-->
+              <div class="md-form mb-4">
+                <input type="text" name="address" id="address" class="form-control" placeholder="1234 Main St">
+                <label for="address" class="">Shipping Address</label>
+              </div>
+
+              <div class="md-form mb-4">
+                <input type="text" name="phoneno" id="phoneno" class="form-control" placeholder="0123456789" required>
+                <label for="phoneno" class="">Phone no</label>
+              </div>
+              
+              {% for p in products %}
+                <input type="hidden" name="product_ids" visibility="false" value="{{p.id}}">
+              {% endfor %}
+              {% if possible %}
+              <class="mb-4">
+                  <button class="btn btn-primary btn-lg btn-block" type="submit">Place Order</button>
+                  {% else %}
+                  <class="mb-4">
+                    <button disabled class="btn btn-danger btn-lg btn-block" type="submit">Insufficient Wallet Balance</button>
+              
+              {% endif%}
+            </form>
+
+          </div>
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+
+          <!-- Heading -->
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <h3 style="color:white">Your cart</h3>
+          </h4>
+          <!-- Cart -->
+          <ul class="list-group mb-3 z-depth-1">
+             {% for product in products %}            
+             <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{product.p_name}}</h6>
+                <small class="text-muted">{{product.p_category}}</small>
+              </div>
+              <span class="text-muted">₹{{ product.p_price }}</span>
+            </li> 
+             {% endfor %} 
+
+             <li class="list-group-item d-flex justify-content-between">
+              <span>Total </span>
+              <strong>₹{{ total_cost }}</strong>
+            </li>  
+          </ul>
+          
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+
+  </section>
+
+    <footer id="footer">
+        <div class="container">
+      <div class="copyright">
+          &copy; Copyright <strong><span>ModernMarket</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Designed by Sachin Gupta
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
+
+
