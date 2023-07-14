@@ -22,14 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-evdq5&hb85u%bicrwq*z3+^9s&f&@^3p&802n(5tiw3$9@xx7m'
 
+#  secret key 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['.vercel.app','.now.sh','127.0.0.1','localhost']
 
 # Application definition
-
+# // add the new apps name in the installed apps
 INSTALLED_APPS = [
     'ModernMarket_home.apps.ModernMarketHomeConfig',
     'django.contrib.admin',
@@ -74,10 +75,21 @@ WSGI_APPLICATION = 'ModernMarket.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+DATABASES = {     
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '01e3E5tRXK3cEx2LOpWT',
+        'HOST': 'containers-us-west-165.railway.app',
+        'PORT': '7459',
     }
 }
 
@@ -117,10 +129,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS =[
-    os.path.join(BASE_DIR, "static")
-]
+# contains static files
+
+# STATIC_URL = "static/"
+# STATICFILES_DIRS =[
+#     os.path.join(BASE_DIR, "static")
+# ]
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS =os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

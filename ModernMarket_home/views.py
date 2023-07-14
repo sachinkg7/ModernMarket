@@ -9,11 +9,12 @@ from .models import Product, Cart, Wishlist, Order, Wallet
 # Create your views here.
 
 def home(request):
-    return render(request,'home.html')
+    return render(request,'home.html') # home
 
 def signup(request):
 
-    if request.method=='POST':
+    # POST - it will contain all the info in the forms and will update at once
+    if request.method=='POST': 
         ifname=request.POST['fname']
         ilname=request.POST['lname']
         iemail=request.POST['email']
@@ -41,7 +42,6 @@ def signup(request):
         else:
             messages.error(request, "both passwords should match!!")    
             return render(request,'signup.html')
-
     return render(request,'signup.html')
 
 
@@ -149,7 +149,7 @@ def addtocart(request):
             cart_item=Cart.objects.get(user=request.user,product=thisproduct)
             cart_item.quantity=1+cart_item.quantity
             cart_item.save()
-        else: 
+        else:
             new_item= Cart(user=request.user, product=thisproduct,quantity=1)
             new_item.save()
     return redirect(f'/productpage/{product_id}/')
@@ -229,6 +229,8 @@ def placeorder(request):
                 user=request.user
             )
             wallet.balance-=p.p_price
+            p.p_buycount+=1
+            p.save()
             order.save()
         wallet.save()
             
@@ -267,5 +269,5 @@ def myprofile(request):
     context={
         'wallet':wallet
     }
-    print(wallet.balance)
+    # print(wallet.balance)
     return render(request,'myprofile.html',context)
