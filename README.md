@@ -9,7 +9,8 @@ Python-Django Web Application
 * Order History
 * Sign Up/Login
 * Add to cart
-* Wishlist
+* Add to Wishlist
+* Wallet
 
 # Home Page
 ![image](https://github.com/sachinkg7/ModernMarket/assets/96688515/75794916-89dd-42b8-a06b-46efdb5dd5f1)
